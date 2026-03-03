@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Conexión Backend</title>
+    <link rel="icon" href="assets/logo_capun.jpg" type="image/jpeg">
+</head>
+<body>
+    <h1>Test de Conexión Backend</h1>
+    <button onclick="testConnection()">Probar Conexión</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testConnection() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Probando...';
+            
+            try {
+                const response = await fetch('https://capun-api.onrender.com/');
+                const text = await response.text();
+                resultDiv.innerHTML = `<strong>Status ${response.status}:</strong> ${text}`;
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}<br>
+                                      Verifica que:<br>
+                                      1. El backend esté corriendo (node index.js)<br>
+                                      2. El puerto 3000 esté libre<br>
+                                      3. No haya errores en la consola del backend`;
+            }
+        }
+        
+        // Auto-test al cargar
+        window.onload = testConnection;
+    </script>
+</body>
+</html>
